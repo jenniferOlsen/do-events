@@ -1,0 +1,2 @@
+- handle overlapping (set width with var w?)
+- condense functions using callbacks?
