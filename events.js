@@ -9,9 +9,9 @@ var events = [
   { starts_at: 240, duration: 60, title: "Lunch with Karl", location: "TBA" },
   { starts_at: 75, duration: 60, title: "Sync with John" },
   { starts_at: 360, duration: 25 },
-  { starts_at: 420, duration: 120 },
-  { starts_at: 245, duration: 90, title: "test" },
-  { starts_at: 0, duration: 300, title: "early" }
+  { starts_at: 420, duration: 120 }
+  // { starts_at: 245, duration: 90, title: "test" },
+  // { starts_at: 0, duration: 300, title: "early" }
 ];
 
 // Presentational variables
@@ -89,6 +89,10 @@ printEvent = function(start, end, title, location, height, startOffset) {
 
 // Global fuction that can be called from the console for testing
 window.renderEvents = function(events) {
+  // sort by events by starts_at
+  events.sort(function(a, b) {
+    return b.starts_at - a.starts_at;
+  });
   events.forEach(function(event) {
     getStartTime(event.starts_at);
     getEndTime(event.starts_at, event.duration);
