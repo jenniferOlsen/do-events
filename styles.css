@@ -1,18 +1,25 @@
-.calendar {
+#calendar {
   display: grid;
   grid-template-columns: 4rem [hour] auto [hour-block];
   grid-template-rows: repeat(13, 45px);
   color: #b9b6b6;
   margin: 20px;
   font-size: 14px;
+  position: relative;
+}
+
+#events-container {
+  position: absolute;
+  top: 0;
+  left: 4rem;
+  height: 585px;
+  display: flex;
 }
 
 .hour-block {
   border: 1px solid;
   border-bottom: none;
   padding: 0 10px;
-  display: flex;
-  position: relative;
 }
 
 .hour-block:last-of-type {
@@ -27,11 +34,10 @@
 }
 
 .event {
-  grid-column-end: hour-block;
   background: #dafdc1;
   color: #429d21;
   border-left: 3px solid #429d21;
-  padding: 5px 10px;
+  padding: 0 10px;
   flex-basis: 100%;
   z-index: 1;
   display: flex;

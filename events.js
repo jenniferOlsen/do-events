@@ -10,15 +10,17 @@ var events = [
   { starts_at: 75, duration: 60, title: "Sync with John" },
   { starts_at: 360, duration: 25 },
   { starts_at: 420, duration: 120 },
-  { starts_at: 245, duration: 90, title: "test" }
+  { starts_at: 245, duration: 90, title: "test" },
+  { starts_at: 0, duration: 300, title: "early" }
 ];
 
 // Presentational variables
 var startTime;
-var startHour;
 var startOffset;
 var endTime;
 var height;
+// number of pixels for each minute of time
+var pixelMinutes = 0.75;
 
 getClocktime = function(time) {
   // minutes
@@ -52,15 +54,7 @@ getStartTime = function(starts_at) {
   getClocktime(starts_at);
   // get raw start hour for display
   startHour = Math.floor(starts_at / 60);
-
-  // margin offset for starting not on the hour
-  var minutes = starts_at % 60;
-  if (minutes !== 0) {
-    startOffset = Math.floor((minutes / 60) * 45);
-  } else {
-    startOffset = 0;
-  }
-
+  startOffset = Math.floor(starts_at * pixelMinutes);
   startTime = clockTime;
   return startTime;
 };
@@ -73,23 +67,14 @@ getEndTime = function(starts_at, duration) {
 };
 
 getDuration = function(duration) {
-  // height of grid - padding
-  return (height = Math.floor((duration / 60) * 45 - 10));
+  return (height = Math.floor(duration * pixelMinutes));
 };
 
 // Render event to DOM
-printEvent = function(
-  start,
-  startHour,
-  end,
-  title,
-  location,
-  height,
-  startOffset
-) {
-  elem = document.getElementById(`hour-block-${startHour}`);
+printEvent = function(start, end, title, location, height, startOffset) {
+  elem = document.getElementById(`events-container`);
   elem.insertAdjacentHTML(
-    "beforeend",
+    "afterbegin",
     `
     <div class="event" style="height:${height}px; margin-top:${startOffset}px">
       <div class="text">
@@ -110,7 +95,6 @@ window.renderEvents = function(events) {
     getDuration(event.duration);
     printEvent(
       startTime,
-      startHour,
       endTime,
       event.title,
       event.location,
